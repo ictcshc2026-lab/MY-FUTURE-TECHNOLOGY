@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- 
+    =========================================================================
+    GRADE 9 ICT WEB DEVELOPMENT PROJECT
+    Theme: Exploring Artificial Intelligence (AI) and the Future of Tech
+    Concepts Covered: Semantic HTML5, CSS Grid & Flexbox, CSS Variables, 
+                      Responsive Design, and Vanilla JavaScript DOM Manipulation
+    =========================================================================
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exploring AI & The Future of Tech | Grade 9 ICT</title>
+
+  <style>
+    /* =========================================================================
+       1. CSS VARIABLES & GLOBAL RESET
+       Using :root allows us to store colors in one place and reuse them easily.
+       ========================================================================= */
+    :root {
+      --primary-blue: #2563eb;
+      --primary-purple: #7c3aed;
+      --dark-bg: #0f172a;
+      --card-bg: #1e293b;
+      --light-bg: #f8fafc;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --white: #ffffff;
+      --success: #10b981;
+      --error: #ef4444;
+      --gradient: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth; /* Smooth scrolling when clicking navigation links */
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--light-bg);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* =========================================================================
+       2. STICKY NAVIGATION BAR (Flexbox Layout)
+       ========================================================================= */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+
+    .logo span {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+    }
+
+    /* Mobile Hamburger Button (Hidden on Desktop) */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.75rem;
+      cursor: pointer;
+    }
+
+    /* =========================================================================
+       3. HERO SECTION
+       ========================================================================= */
+    .hero {
+      background: var(--dark-bg);
+      color: var(--white);
+      text-align: center;
+      padding: 5rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      background: rgba(124, 58, 237, 0.2);
+      border: 1px solid var(--primary-purple);
+      color: #c4b5fd;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 span {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: #cbd5e1;
+      margin-bottom: 2rem;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: var(--gradient);
+      color: var(--white);
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+    }
+
+    /* =========================================================================
+       4. SHARED SECTION STYLING
+       ========================================================================= */
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4.5rem 1.5rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+      color: var(--dark-bg);
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto 3rem auto;
+    }
+
+    /* =========================================================================
+       5. "WHAT IS AI?" SECTION
+       ========================================================================= */
+    .about-box {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      border-left: 6px solid var(--primary-blue);
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .about-text h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.75rem;
+      color: var(--primary-blue);
+    }
+
+    .about-text p {
+      margin-bottom: 1rem;
+      color: var(--text-main);
+    }
+
+    .key-pillars {
+      background: #eff6ff;
+      padding: 1.5rem;
+      border-radius: 12px;
+    }
+
+    .key-pillars h4 {
+      color: var(--primary-purple);
+      margin-bottom: 0.75rem;
+    }
+
+    .key-pillars ul {
+      list-style-position: inside;
+      color: var(--text-main);
+    }
+
+    .key-pillars li {
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    /* =========================================================================
+       6. EVERYDAY AI EXAMPLES (CSS Grid Layout)
+       ========================================================================= */
+    .cards-grid {
+      display: grid;
+      /* Automatically fits as many 300px cards as possible per row */
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      border-top: 4px solid var(--primary-purple);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 25px rgba(37, 99, 235, 0.12);
+    }
+
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.75rem;
+      color: var(--dark-bg);
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+    }
+
+    /* =========================================================================
+       7. INTERACTIVE QUIZ SECTION
+       ========================================================================= */
+    .quiz-container {
+      background: var(--dark-bg);
+      color: var(--white);
+      border-radius: 16px;
+      padding: 2.5rem;
+      max-width: 750px;
+      margin: 0 auto;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.2);
+    }
+
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .score-badge {
+      background: var(--gradient);
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    .question-block {
+      margin-bottom: 2rem;
+    }
+
+    .question-text {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .option-btn {
+      background: var(--card-bg);
+      color: var(--white);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      padding: 0.9rem 1.2rem;
+      border-radius: 10px;
+      text-align: left;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--primary-blue);
+      background: #273549;
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    /* Classes added dynamically by JavaScript when an answer is chosen */
+    .option-btn.correct {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: var(--success);
+      color: #6ee7b7;
+    }
+
+    .option-btn.incorrect {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: var(--error);
+      color: #fca5a5;
+    }
+
+    .feedback-text {
+      margin-top: 0.6rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      min-height: 1.4rem;
+    }
+
+    .reset-btn {
+      background: var(--white);
+      color: var(--dark-bg);
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .reset-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* =========================================================================
+       8. FOOTER
+       ========================================================================= */
+    footer {
+      background: var(--dark-bg);
+      color: #94a3b8;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      margin-top: 2rem;
+      font-size: 0.95rem;
+    }
+
+    /* =========================================================================
+       9. RESPONSIVE MEDIA QUERIES (Mobile & Tablet Adjustments)
+       ========================================================================= */
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block; /* Show hamburger button on small screens */
+      }
+
+      .nav-links {
+        display: none; /* Hide links by default on mobile */
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--dark-bg);
+        padding: 1.5rem;
+        gap: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* JavaScript toggles this class to show/hide the mobile menu */
+      .nav-links.active {
+        display: flex;
+      }
+
+      .about-box {
+        grid-template-columns: 1fr; /* Stack columns vertically on mobile */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================================
+       NAVIGATION HEADER
+       ========================================================================= -->
+  <header>
+    <nav class="nav-container">
+      <a href="#" class="logo">Future<span>AI</span></a>
+      
+      <!-- Hamburger Icon for Mobile Screens -->
+      <button class="menu-toggle" id="mobileMenuBtn" aria-label="Toggle navigation">
+        ☰
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#what-is-ai">What is AI?</a></li>
+        <li><a href="#everyday-ai">Everyday AI</a></li>
+        <li><a href="#ai-quiz">AI Quiz</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- =========================================================================
+       HERO BANNER
+       ========================================================================= -->
+  <div class="hero">
+    <div class="hero-content">
+      <span class="badge">Grade 9 ICT Web Project</span>
+      <h1>Exploring <span>Artificial Intelligence</span> &amp; the Future of Tech</h1>
+      <p>Discover how smart machines learn, make decisions, and power the apps and tools you use every single day.</p>
+      <a href="#what-is-ai" class="cta-btn">Start Exploring</a>
+    </div>
+  </div>
+
+  <main>
+    <!-- =========================================================================
+         SECTION 1: WHAT IS AI?
+         ========================================================================= -->
+    <section id="what-is-ai">
+      <h2 class="section-title">What is Artificial Intelligence?</h2>
+      <p class="section-subtitle">Breaking down the technology shaping tomorrow's world.</p>
+
+      <div class="about-box">
+        <div class="about-text">
+          <h3>Teaching Computers How to Think &amp; Learn</h3>
+          <p>
+            <strong>Artificial Intelligence (AI)</strong> is a branch of computer science focused on building smart machines capable of performing tasks that typically require human intelligence.
+          </p>
+          <p>
+            Instead of following rigid, step-by-step instructions for every possible scenario, AI systems analyze massive amounts of data, recognize patterns, and improve their accuracy over time—a process called <strong>Machine Learning</strong>.
+          </p>
+        </div>
+
+        <div class="key-pillars">
+          <h4>3 Core Abilities of AI:</h4>
+          <ul>
+            <li>🧠 <strong>Learning:</strong> Spotting patterns in data.</li>
+            <li>🔍 <strong>Reasoning:</strong> Making predictions or choices.</li>
+            <li>🗣️ <strong>Perception:</strong> Understanding speech &amp; images.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 2: EVERYDAY AI EXAMPLES
+         ========================================================================= -->
+    <section id="everyday-ai">
+      <h2 class="section-title">Everyday AI Examples</h2>
+      <p class="section-subtitle">You already interact with artificial intelligence dozens of times a day.</p>
+
+      <div class="cards-grid">
+        <!-- Card 1 -->
+        <article class="card">
+          <div class="card-icon">🎙️</div>
+          <h3>Voice Assistants</h3>
+          <p>
+            Tools like Siri, Google Assistant, and Alexa use <strong>Natural Language Processing (NLP)</strong> to convert your spoken words into text, understand your intent, and answer questions hands-free.
+          </p>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="card">
+          <div class="card-icon">🎬</div>
+          <h3>Recommendation Algorithms</h3>
+          <p>
+            When YouTube, Spotify, or Netflix suggests a video or song you end up loving, AI has analyzed your watch history and compared it with millions of other users to predict your taste.
+          </p>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="card">
+          <div class="card-icon">🗺️</div>
+          <h3>Smart Navigation</h3>
+          <p>
+            Apps like Google Maps and Waze process real-time GPS data from millions of phones to predict traffic jams, detect accidents, and calculate the fastest route to your destination.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 3: INTERACTIVE AI QUIZ
+         ========================================================================= -->
+    <section id="ai-quiz">
+      <h2 class="section-title">Test Your AI Knowledge</h2>
+      <p class="section-subtitle">Select an answer for each question below to get instant feedback.</p>
+
+      <div class="quiz-container">
+        <div class="quiz-header">
+          <span>Interactive Knowledge Check</span>
+          <span class="score-badge" id="scoreDisplay">Score: 0 / 3</span>
+        </div>
+
+        <!-- Quiz questions are dynamically injected here by JavaScript -->
+        <div id="quizContent"></div>
+
+        <button class="reset-btn" id="resetQuizBtn">Restart Quiz</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer>
+    <p>&copy; 2026 Grade 9 ICT Student Project | Built with Semantic HTML5, CSS Grid/Flexbox &amp; Vanilla JavaScript.</p>
+  </footer>
+
+  <!-- =========================================================================
+       VANILLA JAVASCRIPT LOGIC
+       Handles: (1) Mobile Menu Toggle and (2) Interactive Quiz Scoring
+       ========================================================================= -->
+  <script>
+    // -------------------------------------------------------------------------
+    // PART 1: MOBILE NAVIGATION TOGGLE
+    // -------------------------------------------------------------------------
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+
+    // Toggle the 'active' class when the hamburger icon is clicked
+    mobileMenuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Automatically close the mobile menu when a user clicks a navigation link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+
+    // -------------------------------------------------------------------------
+    // PART 2: INTERACTIVE QUIZ DATA & LOGIC
+    // -------------------------------------------------------------------------
+    // Array of question objects containing the question, choices, correct index, and explanation
+    const quizData = [
+      {
+        question: "1. What allows AI systems to improve automatically through experience and data?",
+        options: [
+          "Machine Learning",
+          "Manual Coding",
+          "Cloud Storage",
+          "Fiber Optic Cables"
+        ],
+        correctIndex: 0,
+        explanation: "Correct! Machine Learning enables computers to spot patterns in data and improve without being explicitly programmed for every rule."
+      },
+      {
+        question: "2. Which AI technology helps voice assistants understand human speech?",
+        options: [
+          "Virtual Reality (VR)",
+          "Natural Language Processing (NLP)",
+          "3D Rendering",
+          "Blockchain"
+        ],
+        correctIndex: 1,
+        explanation: "Spot on! NLP helps computers read, decipher, and understand human languages."
+      },
+      {
+        question: "3. How do apps like Google Maps predict traffic jams ahead of time?",
+        options: [
+          "By guessing randomly",
+          "By asking local radio stations",
+          "By analyzing real-time location data from millions of devices",
+          "By checking weather satellites only"
+        ],
+        correctIndex: 2,
+        explanation: "Great job! AI aggregates anonymous speed and location data from drivers on the road to spot slowdowns instantly."
+      }
+    ];
+
+    // Track user's current score
+    let currentScore = 0;
+
+    // Grab HTML elements we need to update
+    const quizContent = document.getElementById('quizContent');
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    const resetQuizBtn = document.getElementById('resetQuizBtn');
+
+    // Function to build and render the quiz on the page
+    function renderQuiz() {
+      currentScore = 0;
+      updateScoreDisplay();
+      quizContent.innerHTML = ''; // Clear any existing content
+
+      // Loop through each question in quizData
+      quizData.forEach((item, qIndex) => {
+        // Create wrapper div for the question
+        const questionBlock = document.createElement('div');
+        questionBlock.classList.add('question-block');
+
+        // Create question title
+        const questionTitle = document.createElement('p');
+        questionTitle.classList.add('question-text');
+        questionTitle.textContent = item.question;
+        questionBlock.appendChild(questionTitle);
+
+        // Create container for answer buttons
+        const optionsList = document.createElement('div');
+        optionsList.classList.add('options-list');
+
+        // Create paragraph for instant feedback
+        const feedback = document.createElement('p');
+        feedback.classList.add('feedback-text');
+
+        // Create a button for each multiple-choice option
+        item.options.forEach((optionText, oIndex) => {
+          const button = document.createElement('button');
+          button.classList.add('option-btn');
+          button.textContent = optionText;
+
+          // Add click event listener to check the answer
+          button.addEventListener('click', () => {
+            handleAnswerClick(button, oIndex, item, optionsList, feedback);
+          });
+
+          optionsList.appendChild(button);
+        });
+
+        questionBlock.appendChild(optionsList);
+        questionBlock.appendChild(feedback);
+        quizContent.appendChild(questionBlock);
+      });
+    }
+
+    // Function that runs whenever a student clicks an answer button
+    function handleAnswerClick(selectedBtn, selectedIndex, questionItem, optionsContainer, feedbackElement) {
+      // Disable all buttons for this question so the user can only answer once
+      const allButtons = optionsContainer.querySelectorAll('.option-btn');
+      allButtons.forEach(btn => btn.disabled = true);
+
+      // Check if the chosen index matches the correct answer
+      if (selectedIndex === questionItem.correctIndex) {
+        selectedBtn.classList.add('correct');
+        feedbackElement.style.color = '#6ee7b7';
+        feedbackElement.textContent = "✓ " + questionItem.explanation;
+        currentScore++;
+        updateScoreDisplay();
+      } else {
+        selectedBtn.classList.add('incorrect');
+        // Highlight the right answer so the student learns from it
+        allButtons[questionItem.correctIndex].classList.add('correct');
+        feedbackElement.style.color = '#fca5a5';
+        feedbackElement.textContent = "✗ Not quite. The correct answer is highlighted in green.";
+      }
+    }
+
+    // Updates the score counter badge at the top of the quiz
+    function updateScoreDisplay() {
+      scoreDisplay.textContent = `Score: ${currentScore} / ${quizData.length}`;
+    }
+
+    // Reset button event listener
+    resetQuizBtn.addEventListener('click', renderQuiz);
+
+    // Initialize the quiz when the page first loads
+    renderQuiz();
+  </script>
+
+</body>
+</html>
